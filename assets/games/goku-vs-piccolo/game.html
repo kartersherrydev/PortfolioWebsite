@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'none'; script-src 'self' 'unsafe-inline'; img-src 'self'; style-src 'unsafe-inline'; connect-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    >
+    <title>Goku vs. Piccolo — Student Fan Project</title>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background: #030406;
+        }
+
+        body {
+            display: grid;
+            place-items: center;
+        }
+
+        canvas {
+            display: block;
+            width: min(500px, 100vw, 100vh);
+            height: min(500px, 100vw, 100vh);
+            image-rendering: pixelated;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas
+        id="gameCanvas"
+        width="500"
+        height="500"
+        tabindex="0"
+        aria-label="Goku versus Piccolo directional combat game"
+    ></canvas>
+
+
+
+    <!-- EaselJS 1.0.0 is stored locally with its MIT license for reliable GitHub Pages hosting. -->
+    <script src="easeljs.min.js"></script>
+
+    <script>
+        const stage = new createjs.Stage("gameCanvas");
+        const gameCanvas = document.getElementById("gameCanvas");
+
+        // --------------------
+        // BACKGROUND
+        // --------------------
+        const background = new createjs.Bitmap("Player sprites/Background.png");
+        background.x = 0;
+        background.y = 0;
+        background.scaleX = 1.05;
+        background.scaleY = 1.05;
+        stage.addChild(background);
+
+
+        // --------------------
+        // GAME STATE
+        // --------------------
+        let gameState = "start";
+        let endMessage = "";
+
+        // --------------------
+        // HEALTH
+        // --------------------
+        let playerMaxHealth = 12;
+        let playerHealth = 12;
+
+        let playerDamaged = false;
+
+        let enemyMaxHealth = 30;
+        let enemyHealth = 30;
+
+        // --------------------
+        // HEALTH BARS
+        // --------------------
+        const playerNameText = new createjs.Text("SON GOKU", "14px Arial", "black");
+        playerNameText.x = 10;
+        playerNameText.y = 12;
+        stage.addChild(playerNameText);
+
+        const enemyNameText = new createjs.Text("DEMON KING PICCOLO", "13px Arial", "black");
+        enemyNameText.textAlign = "right";
+        enemyNameText.x = 490;
+        enemyNameText.y = 12;
+        stage.addChild(enemyNameText);
+
+        const playerBarBg = new createjs.Shape();
+        playerBarBg.graphics.beginFill("black").drawRect(8, 38, 154, 24);
+        playerBarBg.graphics.beginFill("gray").drawRect(10, 40, 150, 20);
+        stage.addChild(playerBarBg);
+
+        const playerBar = new createjs.Shape();
+        stage.addChild(playerBar);
+
+        const enemyBarBg = new createjs.Shape();
+        enemyBarBg.graphics.beginFill("black").drawRect(338, 38, 154, 24);
+        enemyBarBg.graphics.beginFill("gray").drawRect(340, 40, 150, 20);
+        stage.addChild(enemyBarBg);
+
+        const enemyBar = new createjs.Shape();
+        stage.addChild(enemyBar);
+
+        function updateHealthBars() {
+            playerBar.graphics.clear();
+            playerBar.graphics.beginFill("limegreen")
+                .drawRect(10, 40, (playerHealth / playerMaxHealth) * 150, 20);
+
+            enemyBar.graphics.clear();
+            enemyBar.graphics.beginFill("red")
+                .drawRect(340, 40, (enemyHealth / enemyMaxHealth) * 150, 20);
+        }
+
+        // --------------------
+        // PLAYER
+        // --------------------
+        const leftGlove = new createjs.Bitmap("Player sprites/PlayerHand.png");
+        leftGlove.regX = 3;
+        leftGlove.regY = 16;
+        leftGlove.scaleX = 0.9;
+        leftGlove.scaleY = 0.9;
+
+        const rightGlove = new createjs.Bitmap("Player sprites/PlayerHand.png");
+        rightGlove.regX = 16;
+        rightGlove.regY = 16;
+        rightGlove.scaleX = 0.9;
+        rightGlove.scaleY = 0.9;
+
+        stage.addChild(leftGlove);
+        stage.addChild(rightGlove);
+
+        const player = new createjs.Bitmap("Player sprites/Goku Idle.png");
+        player.x = 250;
+        player.y = 400;
+        player.regX = 32;
+        player.regY = 32;
+        stage.addChild(player);
+
+        const playerSprites = {
+            idle: "Player sprites/Goku Idle.png",
+            leftPunch: "Player sprites/Left Punch.png",
+            rightPunch: "Player sprites/Right punch.png",
+            block: "Player sprites/Block.png",
+            damage: "Player sprites/Damage.png"
+        };
+
+        function setPlayerSprite(spriteName) {
+            player.image.src = playerSprites[spriteName];
+        }
+
+        // --------------------
+        // ENEMY BODY
+        // --------------------
+        const enemy = new createjs.Bitmap("Player sprites/PiccoloBody.png");
+        enemy.x = 245;
+        enemy.y = 333;
+        enemy.regX = 35;
+        enemy.regY = 29;
+        enemy.scaleX = 1;
+        enemy.scaleY = 1;
+        stage.addChild(enemy);
+
+        let enemyBaseX = enemy.x;
+        let enemyBaseY = enemy.y;
+
+        let enemyRecoilX = 0;
+        let enemyRecoilTimer = 0;
+        const enemyRecoilDuration = 120;
+
+        // --------------------
+        // ENEMY HEAD
+        // --------------------
+        const enemyHead = new createjs.Bitmap("Player sprites/Piccolo Face.png");
+        enemyHead.regX = 28;
+        enemyHead.regY = 1;
+        enemyHead.scaleX = 1;
+        enemyHead.scaleY = .8;
+        stage.addChild(enemyHead);
+
+        const enemyHeadSprites = {
+            idle: "Player sprites/Piccolo Face.png",
+            hitLeft: "Player sprites/PiccoloHitFaceRight.png",
+            hitRight: "Player sprites/PiccoloHitFace.png",
+            angry: "Player sprites/PiccoloAngryFace.png",
+            kiSphere: "Player sprites/KiBall.png"
+        };
+
+        function setEnemyHeadSprite(spriteName) {
+            enemyHead.image.src = enemyHeadSprites[spriteName];
+        }
+
+        let enemyHeadSide = "left";
+        let nextHeadSwitchTime = Date.now() + 2000;
+
+        // --------------------
+        // ENEMY HANDS
+        // --------------------
+        const enemyLeftGlove = new createjs.Bitmap("Player sprites/PicLeftHand.png");
+        enemyLeftGlove.regX = 16;
+        enemyLeftGlove.regY = 1;
+        enemyLeftGlove.scaleX = 1;
+        enemyLeftGlove.scaleY = 1;
+
+        const enemyRightGlove = new createjs.Bitmap("Player sprites/PicRightHand.png");
+        enemyRightGlove.regX = 12;
+        enemyRightGlove.regY = 10;
+        enemyRightGlove.scaleX = 1;
+        enemyRightGlove.scaleY = 1;
+
+        stage.addChild(enemyLeftGlove);
+        stage.addChild(enemyRightGlove);
+
+        // --------------------
+        // PICCOLO KI ATTACK
+        // --------------------
+        const kiSphere = new createjs.Bitmap("Player sprites/KiBall.png");
+        kiSphere.regX = 32;
+        kiSphere.regY = 32;
+        kiSphere.visible = false;
+        stage.addChild(kiSphere);
+
+        let enemyAttackType = "punch";
+
+        const kiChargeTime = 500;
+        const kiAttackDuration = 750;
+        const kiDamage = 5;
+        const kiBlockDamage = 0;
+        const kiChance = 0.3;
+
+
+        // --------------------
+        // ENEMY ATTACK
+        // --------------------
+        let enemyAttacking = false;
+        let enemyAttackSide = "left";
+        let enemyAttackTimer = 0;
+        let enemyAttackHit = false;
+
+        const enemyAttackDuration = 700;
+        const enemyFlashDuration = 400;
+
+        let nextEnemyAttackTime = Date.now() + 1200;
+
+        function randomEnemyAttackDelay() {
+            return 900 + Math.random() * 1300;
+        }
+
+        function randomHeadDelay() {
+            return 500 + Math.random() * 900;
+        }
+
+        // --------------------
+        // UI TEXT
+        // --------------------
+        const centerText = new createjs.Text("", "24px Arial", "black");
+        centerText.textAlign = "center";
+        centerText.x = 250;
+        centerText.y = 200;
+        stage.addChild(centerText);
+
+        const controlsText = new createjs.Text(
+            "Controls:\n← Left Punch\n→ Right Punch\n↓ Block",
+            "14px Arial",
+            "black"
+        );
+        controlsText.x = 10;
+        controlsText.y = 70;
+        stage.addChild(controlsText);
+
+        // --------------------
+        // INPUT
+        // --------------------
+        const keys = {};
+
+        function startOrRestartGame() {
+            resetGame();
+            gameState = "playing";
+            centerText.text = "";
+        }
+
+        // Clicking the canvas both focuses its keyboard input and starts the game.
+        // This is especially important when the portfolio is opened directly as a local file.
+        gameCanvas.addEventListener("pointerdown", () => {
+            window.focus();
+            gameCanvas.focus();
+
+            if (gameState !== "playing") {
+                startOrRestartGame();
+            }
+        });
+
+        window.addEventListener("keydown", e => {
+            // Keep the game's arrow and Space controls from scrolling its host page.
+            if (["ArrowLeft", "ArrowRight", "ArrowDown", "Space"].includes(e.code)) {
+                e.preventDefault();
+            }
+
+            keys[e.key] = true;
+
+            if (e.code === "Space") {
+                if (gameState === "start" || gameState === "end") {
+                    startOrRestartGame();
+                }
+            }
+        });
+
+        window.addEventListener("keyup", e => keys[e.key] = false);
+
+        // --------------------
+        // RESET
+        // --------------------
+        function resetGame() {
+            playerHealth = playerMaxHealth;
+            enemyHealth = enemyMaxHealth;
+
+            player.x = 250;
+            player.y = 400;
+            player.alpha = 1;
+            player.scaleX = 1;
+            player.scaleY = 1;
+            setPlayerSprite("idle");
+
+            enemy.x = enemyBaseX;
+            enemy.y = enemyBaseY;
+            enemy.alpha = 1;
+
+            enemyHead.alpha = 1;
+            setEnemyHeadSprite("idle");
+
+            enemyLeftGlove.alpha = 1;
+            enemyRightGlove.alpha = 1;
+
+            enemyRecoilX = 0;
+            enemyRecoilTimer = 0;
+
+            enemyAttacking = false;
+            enemyAttackHit = false;
+            nextEnemyAttackTime = Date.now() + randomEnemyAttackDelay();
+
+            enemyHeadSide = "left";
+            nextHeadSwitchTime = Date.now() + randomHeadDelay();
+
+            leftPunching = false;
+            rightPunching = false;
+            leftHit = false;
+            rightHit = false;
+
+            updateHealthBars();
+        }
+
+        // --------------------
+        // PLAYER PUNCH
+        // --------------------
+        let leftPunching = false;
+        let rightPunching = false;
+
+        let leftPunchTimer = 0;
+        let rightPunchTimer = 0;
+
+        let prevKeys = { ArrowLeft: false, ArrowRight: false };
+
+        let leftHit = false;
+        let rightHit = false;
+
+        const punchDuration = 150;
+
+        // --------------------
+        // COLLISION
+        // --------------------
+        function isColliding(a, b, range) {
+            let dx = a.x - b.x;
+            let dy = a.y - b.y;
+            return Math.sqrt(dx * dx + dy * dy) < range;
+        }
+
+        // --------------------
+        // HIT ENEMY
+        // --------------------
+        function hitEnemy(direction) {
+            enemyHealth = Math.max(0, enemyHealth - 1);
+
+            enemyRecoilX = (direction === "left") ? 18 : -18;
+            enemyRecoilTimer = Date.now();
+
+            if (direction === "left") {
+                setEnemyHeadSprite("hitLeft");
+            } else {
+                setEnemyHeadSprite("hitRight");
+            }
+
+            enemy.alpha = 0.65;
+            enemyHead.alpha = 0.65;
+
+            setTimeout(() => {
+                enemy.alpha = 1;
+                enemyHead.alpha = 1;
+                setEnemyHeadSprite("idle");
+            }, 280);
+        }
+
+        function hitPlayer(blocking) {
+            if (!blocking) {
+                playerHealth = Math.max(0, playerHealth - 1);
+
+                playerDamaged = true;
+                setPlayerSprite("damage");
+
+                player.y += 10;
+                player.alpha = 0.8;
+
+                setTimeout(() => {
+                    player.y -= 10;
+                    player.alpha = 1;
+                    playerDamaged = false;
+
+                    if (!keys["ArrowDown"] && !leftPunching && !rightPunching && !playerDamaged) {
+                        setPlayerSprite("idle");
+                    }
+                }, 250);
+            }
+        }
+
+        // --------------------
+        // GAME LOOP
+        // --------------------
+        createjs.Ticker.framerate = 60;
+
+        createjs.Ticker.on("tick", () => {
+
+            let now = Date.now();
+
+            if (gameState === "start") {
+                centerText.text = "PRESS SPACE TO START";
+                controlsText.visible = true;
+                updateHealthBars();
+                stage.update();
+                return;
+            }
+
+            if (gameState === "end") {
+                centerText.text = endMessage + "\nPress SPACE";
+                controlsText.visible = false;
+                updateHealthBars();
+                stage.update();
+                return;
+            }
+
+            centerText.text = "";
+            controlsText.visible = false;
+
+            let blocking = keys["ArrowDown"];
+
+            // --------------------
+            // ENEMY RECOIL RETURN
+            // --------------------
+            if (enemyRecoilX !== 0) {
+                let elapsed = now - enemyRecoilTimer;
+                let progress = elapsed / enemyRecoilDuration;
+
+                if (progress >= 1) {
+                    enemyRecoilX = 0;
+                    enemy.x = enemyBaseX;
+                } else {
+                    enemy.x = enemyBaseX + enemyRecoilX * (1 - progress);
+                }
+            } else {
+                enemy.x = enemyBaseX;
+            }
+
+            enemy.y = enemyBaseY;
+
+            let baseY = player.y;
+            let leftBaseX = player.x - 20;
+            let rightBaseX = player.x + 20;
+
+            let eLeftBaseX = enemy.x - 30;
+            let eRightBaseX = enemy.x + 30;
+            let eBaseY = enemy.y + 8;
+
+            // --------------------
+            // PLAYER INPUT
+            // --------------------
+            if (keys["ArrowLeft"] && !prevKeys["ArrowLeft"] && !leftPunching) {
+                leftPunching = true;
+                leftPunchTimer = now;
+                leftHit = false;
+                setPlayerSprite("leftPunch");
+            }
+
+            if (keys["ArrowRight"] && !prevKeys["ArrowRight"] && !rightPunching) {
+                rightPunching = true;
+                rightPunchTimer = now;
+                rightHit = false;
+                setPlayerSprite("rightPunch");
+            }
+
+            // --------------------
+            // PLAYER PUNCH
+            // --------------------
+            function animatePunch(isLeft) {
+                let punching = isLeft ? leftPunching : rightPunching;
+                let timer = isLeft ? leftPunchTimer : rightPunchTimer;
+                let glove = isLeft ? leftGlove : rightGlove;
+                let hit = isLeft ? leftHit : rightHit;
+
+                if (punching) {
+                    let elapsed = now - timer;
+                    let progress = elapsed / punchDuration;
+                    let offset = (progress < 0.5) ? progress * 2 : (1 - progress) * 2;
+
+                    glove.x = isLeft ? leftBaseX : rightBaseX;
+                    glove.y = baseY - offset * 120;
+
+                    if (!hit && isColliding(glove, enemyHead, 25)) {
+                        if (isLeft) leftHit = true;
+                        else rightHit = true;
+
+                        hitEnemy(isLeft ? "left" : "right");
+                    }
+
+                    if (elapsed > punchDuration) {
+                        if (isLeft) leftPunching = false;
+                        else rightPunching = false;
+
+                        if (!leftPunching && !rightPunching && !blocking) {
+                            setPlayerSprite("idle");
+                        }
+                    }
+
+                } else {
+                    glove.x = isLeft ? leftBaseX : rightBaseX;
+                    glove.y = baseY;
+                }
+            }
+
+            animatePunch(true);
+            animatePunch(false);
+
+            // --------------------
+            // BLOCK
+            // --------------------
+            if (blocking) {
+                setPlayerSprite("block");
+
+                leftGlove.x = player.x - 18;
+                rightGlove.x = player.x + 18;
+
+                leftGlove.y = player.y - 18;
+                rightGlove.y = player.y - 18;
+            } else {
+                if (!leftPunching && !rightPunching && !playerDamaged) {
+                    setPlayerSprite("idle");
+                }
+            }
+
+            // --------------------
+            // ENEMY HEAD RANDOM SIDE SWITCH
+            // --------------------
+            if (now > nextHeadSwitchTime && !enemyAttacking) {
+                enemyHeadSide = enemyHeadSide === "left" ? "right" : "left";
+                nextHeadSwitchTime = now + randomHeadDelay();
+            }
+
+            if (enemyHeadSide === "left") {
+                enemyHead.x = enemy.x - 5;
+            } else {
+                enemyHead.x = enemy.x + 8;
+            }
+
+            enemyHead.y = enemy.y - 58;
+
+            // --------------------
+            // ENEMY ATTACK START
+            // --------------------
+            if (!enemyAttacking && now > nextEnemyAttackTime) {
+                enemyAttacking = true;
+                enemyAttackTimer = now;
+                enemyAttackHit = false;
+
+                if (Math.random() < kiChance) {
+                    enemyAttackType = "ki";
+                    setEnemyHeadSprite("angry");
+                    kiSphere.visible = true;
+                    kiSphere.alpha = 0.4;
+                    kiSphere.scaleX = 0.1;
+                    kiSphere.scaleY = 0.1;
+                    kiSphere.x = enemy.x;
+                    kiSphere.y = enemy.y + 35;
+                } else {
+                    enemyAttackType = "punch";
+                    enemyAttackSide = enemyHeadSide;
+                }
+            }
+
+            // --------------------
+            // ENEMY HANDS
+            // --------------------
+            enemyLeftGlove.x = eLeftBaseX;
+            enemyLeftGlove.y = eBaseY;
+
+            enemyRightGlove.x = eRightBaseX;
+            enemyRightGlove.y = eBaseY;
+
+            enemyLeftGlove.alpha = 1;
+            enemyRightGlove.alpha = 1;
+
+            if (enemyAttacking && enemyAttackType === "punch") {
+                let elapsed = now - enemyAttackTimer;
+                let attackGlove = enemyAttackSide === "left" ? enemyLeftGlove : enemyRightGlove;
+
+                if (elapsed < enemyFlashDuration) {
+                    attackGlove.alpha = Math.floor(elapsed / 80) % 2 === 0 ? 0.25 : 1;
+                } else {
+                    let punchElapsed = elapsed - enemyFlashDuration;
+                    let progress = punchElapsed / (enemyAttackDuration - enemyFlashDuration);
+                    let offset = (progress < 0.5) ? progress * 2 : (1 - progress) * 2;
+
+                    attackGlove.alpha = 1;
+                    attackGlove.y = eBaseY + offset * 50;
+
+                    if (!enemyAttackHit && isColliding(attackGlove, player, 45)) {
+                        enemyAttackHit = true;
+                        hitPlayer(blocking);
+                    }
+                }
+
+                if (elapsed > enemyAttackDuration) {
+                    enemyAttacking = false;
+                    nextEnemyAttackTime = now + randomEnemyAttackDelay();
+                    enemyLeftGlove.alpha = 1;
+                    enemyRightGlove.alpha = 1;
+                }
+            }
+
+            if (enemyAttacking && enemyAttackType === "ki") {
+                let elapsed = now - enemyAttackTimer;
+
+                kiSphere.x = enemy.x;
+                kiSphere.y = enemy.y - 12;
+
+                if (elapsed < kiChargeTime) {
+                    let chargeProgress = elapsed / kiChargeTime;
+
+                    kiSphere.visible = true;
+                    kiSphere.alpha = 0.4 + Math.sin(now * 0.03) * 0.3;
+                    kiSphere.scaleX = 0.3 + chargeProgress * 0.9;
+                    kiSphere.scaleY = 0.3 + chargeProgress * 0.9;
+
+                    enemyHead.alpha = Math.floor(elapsed / 100) % 2 === 0 ? 1 : 0.5;
+                } else {
+                    let blastProgress = (elapsed - kiChargeTime) / (kiAttackDuration - kiChargeTime);
+
+                    kiSphere.alpha = 1;
+                    kiSphere.scaleX = 1.4 + blastProgress * 2.2;
+                    kiSphere.scaleY = 1.4 + blastProgress * 2.2;
+                    kiSphere.y = enemy.y + 35 + blastProgress * 90;
+
+                    enemyHead.alpha = 1;
+
+                    if (!enemyAttackHit && blastProgress > 0.45) {
+                        enemyAttackHit = true;
+
+                        if (blocking) {
+                            playerHealth = Math.max(0, playerHealth - kiBlockDamage);
+                        } else {
+                            playerHealth = Math.max(0, playerHealth - kiDamage);
+                            setPlayerSprite("damage");
+                            player.alpha = 0.6;
+
+                            setTimeout(() => {
+                                player.alpha = 1;
+                                if (!keys["ArrowDown"] && !leftPunching && !rightPunching) {
+                                    setPlayerSprite("idle");
+                                }
+                            }, 250);
+                        }
+                    }
+                }
+
+                if (elapsed > kiAttackDuration) {
+                    enemyAttacking = false;
+                    kiSphere.visible = false;
+                    kiSphere.alpha = 1;
+                    enemyHead.alpha = 1;
+                    setEnemyHeadSprite("idle");
+                    nextEnemyAttackTime = now + randomEnemyAttackDelay();
+                }
+            }
+
+            // --------------------
+            // WIN / LOSE
+            // --------------------
+            if (enemyHealth <= 0) {
+                endMessage = "YOU WIN";
+                gameState = "end";
+            }
+
+            if (playerHealth <= 0) {
+                endMessage = "YOU LOST";
+                gameState = "end";
+            }
+
+            updateHealthBars();
+            stage.update();
+
+            prevKeys["ArrowLeft"] = keys["ArrowLeft"];
+            prevKeys["ArrowRight"] = keys["ArrowRight"];
+        });
+
+    </script>
+
+</body>
+
+</html>

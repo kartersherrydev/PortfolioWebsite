@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Name | Game Developer, Designer, Artist</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!--
+    SITE HEADER
+    This stays pinned near the top of the page.
+    - Change the logo initials inside .logo-mark.
+    - Change the navigation labels or href values to point to different sections.
+  -->
+  <header class="site-header" aria-label="Primary navigation">
+    <a class="logo-link" href="#about" aria-label="Back to top">
+      <span class="logo-mark">KD</span>
+    </a>
+
+    <nav class="vertical-nav" aria-label="Portfolio sections">
+      <a href="#about" class="nav-link is-active">Home</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <!--
+      ABOUT SCROLL STAGE
+      The hero and About panel now share one tall section instead of occupying two separate screens.
+      - .about-sticky-frame stays pinned while the user moves through this section.
+      - script.js updates --about-progress from 0 to 1 as the section is scrolled.
+      - The hero fades backward while the About panel glides over it.
+      - After the animation finishes, the sticky frame releases naturally into Projects.
+    -->
+    <section class="about-scroll-stage" id="about" data-nav-section="about" data-about-scroll>
+      <div class="about-sticky-frame">
+        <!--
+          HERO LAYER
+          This remains the first impression and becomes the background of the About transition.
+        -->
+        <div class="hero-section page-section about-hero-layer">
+          <div class="hero-copy">
+            <h1 class="hero-title">KARTER SHERRY</h1>
+            <p class="hero-roles">Game Developer. Graphic Designer. Artist & Animator.</p>
+          </div>
+
+          <aside class="portrait-frame" aria-label="Portrait of Karter Sherry">
+            <img
+              class="portrait-image"
+              src="assets/images/home-portrait.jpg"
+              alt="Karter Sherry standing in front of a beach at sunset"
+              decoding="async"
+              fetchpriority="high"
+            >
+          </aside>
+        </div>
+
+        <!--
+          ABOUT OVERLAY
+          The narrow text measure keeps the biography readable while the panel supplies the visual impact.
+          Keep each idea in its own paragraph so this remains easy to scan and edit later.
+        -->
+        <div class="about-overlay-wrap page-section">
+          <article class="about-visual-panel">
+            <div class="about-panel-copy">
+              <div class="about-panel-heading">
+                <p class="section-kicker">About Me</p>
+                <span class="about-progress-line" aria-hidden="true"></span>
+              </div>
+
+              <div class="about-copy-stack">
+                <p>
+                  I am a senior studying Games, Interactive Media, and Mobile Technology at Boise State University. As a multidisciplinary designer and developer, I create games, visual identities, interfaces, and digital experiences that combine thoughtful interaction with strong visual direction.                </p>
+                <p>
+                  My work spans graphic design, UI/UX, gameplay programming, web development, 3D modeling, and animation. This range allows me to approach projects from both creative and technical perspectives—developing the systems behind an experience while also shaping how it looks, feels, and communicates.                </p>
+                <p>
+                  I am especially interested in work where design, technology, and storytelling come together. Whether collaborating with a team or developing a project independently, I aim to create work that is visually distinctive, intuitive to use, and carefully considered from concept through execution.                </p>
+              </div>
+
+              <div class="hero-actions" aria-label="Main actions">
+                <a class="button primary-button" href="work.html">See Projects</a>
+                <a class="button secondary-button" href="#contact">Contact</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!--
+      PROJECTS SECTION
+      This area highlights the main project first, then gives visitors a clear path
+      into the full body of work below.
+    -->
+    <section class="projects-section page-section reveal-panel" id="projects" data-nav-section="projects">
+      <div class="section-heading">
+        <p class="section-kicker">Projects</p>
+      </div>
+
+      <article class="featured-project">
+        <div class="project-info">
+          <p class="project-label">Main Project</p>
+          <h3>SYMBIOSIS</h3>
+        </div>
+
+        <!-- This reuses the playable current-build trailer from the SYMBIOSIS work page. -->
+        <div class="symbiosis-trailer-frame featured-project-trailer" data-symbiosis-trailer>
+          <video
+            src="assets/videos/symbiosis/current-build-trailer.mp4"
+            poster="assets/images/symbiosis/current-build-trailer-poster.png"
+            controls
+            playsinline
+            preload="metadata"
+            aria-label="SYMBIOSIS current-build mechanics trailer"
+          ></video>
+          <button class="symbiosis-trailer-play" type="button" data-trailer-play>
+            <span aria-hidden="true">&#9654;</span>
+            Play Trailer
+          </button>
+        </div>
+
+        <div class="project-side">
+          <div class="project-meta" aria-label="Project skills">
+            <span>Unity 6</span>
+            <span>Solo Developer</span>
+            <span>3D Platformer</span>
+            <span>C#</span>
+          </div>
+        </div>
+
+        <p class="project-summary">
+            An independently developed 3D platformer built in Unity 6, centered on high-speed traversal, grappling, swinging, and combat. Currently being rebuilt from the ground up with redesigned movement and gameplay systems.
+        </p>
+      </article>
+
+      <a class="view-work-card" href="work.html">
+        <span>View all work</span>
+        <small>Games, web design, art, and animations</small>
+      </a>
+    </section>
+
+    <!--
+      CONTACT SECTION
+      Replace each placeholder value with your real contact information.
+      If you do not want to show your phone number publicly, remove that row.
+    -->
+    <section class="contact-section page-section reveal-panel" id="contact" data-nav-section="contact">
+      <div class="contact-copy">
+        <p class="section-kicker">Contact</p>
+        <h2>Let's connect.</h2>
+        <p>
+          I am currently open to internships, freelance projects, and collaborative opportunities in graphic design, game development, UI/UX, and animation. If you are looking for a multidisciplinary designer and developer who brings together visual creativity and technical problem-solving, I would be glad to connect.
+
+        </p>
+      </div>
+
+      <address class="contact-list">
+        <a class="contact-link contact-link-gmail" href="mailto:kjsherry8@gmail.com">
+          <img class="contact-icon contact-icon-gmail" src="assets/icons/gmail.svg" alt="">
+          <span>kjsherry8@gmail.com</span>
+        </a>
+        <a class="contact-link contact-link-phone" href="tel:+12085308914">
+          <img class="contact-icon contact-icon-phone" src="assets/icons/phone.png" alt="">
+          <span>(208) 530-8914</span>
+        </a>
+        <a class="contact-link contact-link-instagram" href="https://www.instagram.com/kartersherry" target="_blank" rel="noreferrer">
+          <svg class="contact-icon contact-icon-instagram" viewBox="0 0 24 24" aria-hidden="true">
+            <defs>
+              <linearGradient id="instagram-hover-gradient" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0" stop-color="#feda75"></stop>
+                <stop offset="0.28" stop-color="#fa7e1e"></stop>
+                <stop offset="0.52" stop-color="#d62976"></stop>
+                <stop offset="0.76" stop-color="#962fbf"></stop>
+                <stop offset="1" stop-color="#4f5bd5"></stop>
+              </linearGradient>
+            </defs>
+            <path d="M7.03.084c-1.277.06-2.149.264-2.911.563-.789.308-1.458.72-2.123 1.388C1.33 2.703.92 3.372.615 4.162.32 4.926.12 5.799.064 7.076.008 8.354-.005 8.764.002 12.023c.006 3.259.02 3.667.082 4.947.061 1.277.264 2.148.564 2.911.308.789.72 1.457 1.388 2.123.668.665 1.336 1.074 2.128 1.38.763.295 1.636.496 2.913.552 1.278.056 1.689.069 4.947.063 3.258-.006 3.668-.021 4.948-.081 1.28-.061 2.147-.266 2.91-.564.789-.308 1.458-.72 2.123-1.388.665-.668 1.074-1.338 1.38-2.128.295-.764.496-1.636.551-2.913.056-1.281.07-1.69.063-4.948-.006-3.259-.021-3.667-.082-4.947-.061-1.28-.264-2.149-.563-2.912-.309-.789-.72-1.457-1.388-2.123C21.298 1.33 20.628.921 19.838.617 19.074.321 18.202.12 16.924.065 15.647.009 15.236-.005 11.977.001 8.718.008 8.31.022 7.03.084Zm.14 21.693c-1.17-.051-1.805-.245-2.229-.408-.56-.216-.96-.477-1.382-.895-.422-.418-.681-.819-.9-1.378-.164-.424-.362-1.058-.417-2.228-.06-1.265-.072-1.645-.079-4.848-.007-3.204.005-3.583.061-4.848.05-1.169.245-1.805.408-2.228.216-.561.476-.96.895-1.382.419-.421.818-.681 1.378-.9.423-.165 1.058-.361 2.227-.417 1.266-.06 1.645-.072 4.848-.079 3.203-.007 3.584.005 4.85.061 1.169.051 1.805.244 2.228.408.561.216.96.475 1.382.895.422.419.681.818.9 1.379.166.422.362 1.056.417 2.226.06 1.266.074 1.645.08 4.848.006 3.203-.006 3.584-.061 4.848-.051 1.17-.245 1.806-.408 2.23-.216.56-.476.96-.895 1.381-.419.422-.818.682-1.379.9-.422.165-1.057.362-2.226.418-1.266.059-1.645.072-4.85.079-3.204.007-3.582-.006-4.848-.061Zm9.783-16.191a1.44 1.44 0 1 0 1.437-1.442 1.44 1.44 0 0 0-1.437 1.442ZM5.839 12.012a6.162 6.162 0 1 0 12.323-.024 6.162 6.162 0 0 0-12.323.024ZM8 12.008A4 4 0 1 1 12.008 16 4 4 0 0 1 8 12.008Z"></path>
+          </svg>
+          <span>@kartersherry</span>
+        </a>
+        <a class="contact-link contact-link-linkedin" href="https://www.linkedin.com/in/kartersherry" target="_blank" rel="noreferrer">
+          <img class="contact-icon contact-icon-linkedin" src="assets/icons/linkedin.png" alt="">
+          <span>Karter Sherry</span>
+        </a>
+      </address>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

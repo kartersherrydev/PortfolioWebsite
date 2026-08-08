@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Work | Your Name</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!--
+    WORK PAGE HEADER
+    This page uses the same logo/nav system as the home page.
+    - Logo returns to index.html.
+    - Nav links jump to the featured projects, 3D work, and future-work panel.
+    - Contact jumps back to the contact section on the home page.
+  -->
+  <header class="site-header" aria-label="Work navigation">
+    <a class="logo-link" href="index.html" aria-label="Back to home">
+      <span class="logo-mark">KS</span>
+    </a>
+
+    <nav class="vertical-nav" aria-label="Work sections">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="#projects" class="nav-link is-active">Projects</a>
+      <a href="#symbiosis" class="nav-link">SYMBIOSIS</a>
+      <a href="#goku-vs-piccolo" class="nav-link">Canvas Game</a>
+      <a href="#modeling-animation" class="nav-link">3D Work</a>
+      <a href="#future-work" class="nav-link">Future Work</a>
+      <a href="index.html#contact" class="nav-link">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <!--
+      WORK PAGE INTRO
+      This gives the second page its own title instead of feeling like a loose section.
+    -->
+    <section class="work-hero page-section reveal-panel" id="projects" data-nav-section="projects">
+      <div class="work-hero-title">
+        <p class="section-kicker">Projects</p>
+        <h1 class="work-title">my work</h1>
+      </div>
+
+      <p class="work-intro">
+          A closer look at the games, interactive experiences, character designs, and visual work I’ve created.      </p>
+
+      <div class="work-jump-links" aria-label="Work category shortcuts">
+        <a class="button secondary-button" href="#symbiosis">SYMBIOSIS</a>
+        <a class="button secondary-button" href="#goku-vs-piccolo">Canvas Game</a>
+        <a class="button secondary-button" href="#modeling-animation">3D Modeling & Animation</a>
+      </div>
+    </section>
+
+    <!--
+      SYMBIOSIS CASE STUDY BLUEPRINT
+      The project is presented as one continuing development story. The overview
+      introduces the full project, followed by distinct original-build and
+      current-rebuild chapters that can receive final captures one piece at a time.
+    -->
+    <section class="work-gallery page-section reveal-panel" id="symbiosis" data-nav-section="symbiosis">
+      <div class="symbiosis-panel">
+        <header class="symbiosis-heading">
+          <div>
+            <p class="section-kicker">01 / Individual Game Project</p>
+            <h2>SYMBIOSIS</h2>
+          </div>
+          <p class="symbiosis-heading-copy">
+          
+          </p>
+        </header>
+
+        <!-- The current-build trailer is the single visual anchor for the project overview. -->
+        <article class="symbiosis-overview symbiosis-card">
+          <div class="symbiosis-overview-media">
+            <p class="work-type">Current Build Trailer</p>
+            <div class="symbiosis-trailer-frame" data-symbiosis-trailer>
+              <video
+                src="assets/videos/symbiosis/current-build-trailer.mp4"
+                poster="assets/images/symbiosis/current-build-trailer-poster.png"
+                controls
+                playsinline
+                preload="metadata"
+                aria-label="SYMBIOSIS current-build mechanics trailer"
+              ></video>
+              <button class="symbiosis-trailer-play" type="button" data-trailer-play>
+                <span aria-hidden="true">&#9654;</span>
+                Play Trailer
+              </button>
+            </div>
+          </div>
+
+          <div class="symbiosis-overview-copy">
+            <p class="work-type">Project Summary</p>
+            <h3>3D Platformer built in Unity 6</h3>
+            <p>
+            SYMBIOSIS is an independently developed third-person 3D platformer built in Unity 6, with a focus on high-speed movement, swinging, and combat. Inspired by the Sonic franchise, SpeedRunners, Spider-Man, and Venom, the game follows a character infected by an alien parasite that grants powerful abilities while gradually damaging his mind. This summer, I began rebuilding the project from scratch, dedicating most of my development time to redesigning its movement and physics systems. The current build introduces more responsive traversal, consistent grapple mechanics, expanded combat options, and improved camera and player-feedback systems while preserving the original concept and identity of the game.
+
+            </p>
+           
+          </div>
+        </article>
+
+        <div class="symbiosis-history-grid" aria-label="SYMBIOSIS project history">
+          <article class="symbiosis-history-card symbiosis-card">
+            <div class="symbiosis-history-copy">
+              <p class="work-type">Project History</p>
+              <h3>Development Over Time</h3>
+              <p>
+                The original SYMBIOSIS grew from a sophomore-year classroom project into a two-level playable demo. It featured hand-drawn animated cutscenes, movement-focused level design, lock-on combat, advanced UI and scene transitions, and a Madness system that rewarded parasite abilities with temporary strength at the cost of hallucinations and increased vulnerability. Its fully manual, physics-based swinging system was ambitious, but difficult to control and often interrupted the fast-paced movement the game was designed around. The current rebuild preserves the original world, narrative, Madness system, and strongest gameplay ideas while redesigning traversal around a consistent grapple angle and guided pendulum arc.
+
+              </p>
+            </div>
+
+            <div class="media-carousel symbiosis-history-carousel" data-carousel aria-label="SYMBIOSIS development and gameplay progression">
+              <div class="media-viewport">
+                <button class="media-arrow media-arrow-left" type="button" data-carousel-prev aria-label="Previous development screenshot">
+                  <span aria-hidden="true">&#8249;</span>
+                </button>
+
+                <div class="media-slide is-current" data-aspect-ratio="1363 / 725">
+                  <img src="assets/images/symbiosis/history/history-06.png" alt="SYMBIOSIS environment development screenshot 1" loading="lazy">
+                </div>
+                <div class="media-slide" data-aspect-ratio="1367 / 730">
+                  <img src="assets/images/symbiosis/history/history-07.png" alt="SYMBIOSIS environment development screenshot 2" loading="lazy">
+                </div>
+                <div class="media-slide" data-aspect-ratio="1332 / 686">
+                  <img src="assets/images/symbiosis/history/history-08.png" alt="SYMBIOSIS environment development screenshot 3" loading="lazy">
+                </div>
+                <div class="media-slide" data-aspect-ratio="1383 / 692">
+                  <img src="assets/images/symbiosis/history/history-09.png" alt="SYMBIOSIS environment development screenshot 4" loading="lazy">
+                </div>
+                <div class="media-slide" data-aspect-ratio="1920 / 1200">
+                  <img src="assets/images/symbiosis/history/history-01.png" alt="SYMBIOSIS development screenshot 5" loading="lazy">
+                </div>
+                <div class="media-slide" data-aspect-ratio="1920 / 1200">
+                  <img src="assets/images/symbiosis/history/history-02.png" alt="SYMBIOSIS development screenshot 6" loading="lazy">
+                </div>
+                <div class="media-slide is-gameplay-crop" data-aspect-ratio="16 / 9">
+                  <img src="assets/images/symbiosis/history/history-03.png" alt="SYMBIOSIS development screenshot 7" loading="lazy">
+                </div>
+                <div class="media-slide is-gameplay-crop" data-aspect-ratio="16 / 9">
+                  <img src="assets/images/symbiosis/history/history-04.png" alt="SYMBIOSIS development screenshot 8" loading="lazy">
+                </div>
+                <div class="media-slide is-gameplay-crop" data-aspect-ratio="16 / 9">
+                  <img src="assets/images/symbiosis/history/history-05.png" alt="SYMBIOSIS development screenshot 9" loading="lazy">
+                </div>
+
+                <button class="media-arrow media-arrow-right" type="button" data-carousel-next aria-label="Next development screenshot">
+                  <span aria-hidden="true">&#8250;</span>
+                </button>
+
+                <p class="media-count" data-carousel-count>01 / 09</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!--
+      GOKU VS. PICCOLO CASE STUDY
+      This panel presents the finished classroom artifact without implying that it
+      is an official or commercial Dragon Ball product. The original game remains
+      untouched; its hosted build and captured media will be connected next.
+    -->
+    <section class="canvas-game-section page-section reveal-panel" id="goku-vs-piccolo" data-nav-section="goku-vs-piccolo">
+      <div class="canvas-game-panel">
+        <div class="canvas-game-heading">
+          <div>
+            <p class="section-kicker">02 / Browser Game</p>
+            <h2>Canvas Game</h2>
+          </div>
+
+          <div class="canvas-game-status" aria-label="Project classification">
+            
+          </div>
+        </div>
+
+        <div class="canvas-feature-grid">
+          <!--
+            GAMEPLAY PREVIEW
+            The finished game uses a square 500 × 500 canvas, so this preview keeps
+            the same 1:1 ratio instead of cropping it into a widescreen frame.
+          -->
+          <article class="canvas-preview-card">
+            <p class="work-type">Gameplay Preview</p>
+            <div class="canvas-preview-frame">
+              <img
+                src="assets/images/goku-vs-piccolo/gameplay-preview.png"
+                alt="Goku facing Piccolo in the 500 by 500 browser combat game"
+                loading="lazy"
+              >
+            </div>
+
+            <!--
+              COMPACT CONTROLS
+              These sit directly beneath the gameplay image so visitors understand
+              the combat loop before opening the playable browser build.
+            -->
+            <div class="canvas-controls" aria-label="Game controls">
+              <p>Controls</p>
+              <div class="canvas-control-grid">
+                <span><kbd>&larr;</kbd> Punch Left</span>
+                <span><kbd>&rarr;</kbd> Punch Right</span>
+                <span><kbd>&darr;</kbd> Block / Dodge</span>
+              </div>
+              <small>
+                Watch Piccolos hand and energy effects to predict his next attack and block in time.
+                Follow his head movement and punch in that direction—the fight ends when either health bar reaches zero.
+              </small>
+            </div>
+          </article>
+
+          <article class="canvas-project-summary">
+            <p class="work-type">Project Summary</p>
+            <p class="canvas-course-line">GIMM 300 / Mobile App Development</p>
+            <p class="canvas-project-lead">
+              Class project built in HTML Canvas and JavaScript.
+            </p>
+            <p>
+              Dragon Ball Z x Punch Out! inspired fan game. I programmed the input, collision, health, blocking, enemy-attack, animation-state,
+              and win/lose systems. I also created the game-specific pixel-art sprites and visual
+              assets used in this student project.
+            </p>
+
+            <ul class="canvas-tech-list" aria-label="Project technology">
+              <li>HTML Canvas</li>
+              <li>JavaScript</li>
+              <li>CreateJS</li>
+              <li>Asesprite</li>
+            </ul>
+
+            <!-- The launch page opens separately so keyboard controls never compete with portfolio scrolling. -->
+            <div class="canvas-play-area">
+              <a
+                class="button primary-button canvas-play-button"
+                href="play-goku-vs-piccolo.html"
+                target="_blank"
+                rel="noopener"
+              >
+                Play Student Project &#8599;
+              </a>
+              <small>Opens the packaged classroom build in a new tab. Desktop keyboard recommended.</small>
+            </div>
+
+            <p class="fan-project-notice">
+              Dragon Ball, Goku, Piccolo, and related characters and marks belong to their respective
+              rights holders. This student fan project is unaffiliated with and is not endorsed by
+              those rights holders.
+            </p>
+          </article>
+        </div>
+
+        <!--
+          PROJECT DETAIL CARDS
+          These squares explain the work behind the artifact. The sprite card uses
+          selected original assets copied from the finished classroom project.
+        -->
+        <div class="canvas-detail-grid">
+          <article class="canvas-detail-card">
+            <p class="work-type">Combat Design</p>
+            <h3>Directional Fighting</h3>
+            <p>
+              The left and right arrow keys throw punches toward different openings while the down
+              arrow blocks incoming attacks. Each action changes Goku's visual state, checks for a
+              collision, applies damage, and updates both health and the win/lose state.
+            </p>
+            <div class="canvas-system-note">
+              <strong>Player loop</strong>
+              <span>Predict Piccolo's head position, input a punch direction, then block the counterattack.</span>
+            </div>
+          </article>
+
+          <article class="canvas-detail-card">
+            <p class="work-type">Enemy Systems</p>
+            <h3>Punches & Ki Attacks</h3>
+            <p>
+              Piccolo head changes position and attacks after randomized delays. Flashing hands telegraph
+              normal punches, while a growing energy effect signals a charged ki attack that deals
+              heavier damage unless the player blocks in time.
+            </p>
+            <div class="canvas-system-note">
+              <strong>Attack selection</strong>
+              <span>Each decision chooses between a standard punch and a less frequent ki attack.</span>
+            </div>
+          </article>
+
+          <article class="canvas-detail-card canvas-sprite-card">
+            <p class="work-type">Sprite Artwork</p>
+            <h3>Character States</h3>
+            <p>
+              Separate idle, punch, block, damage, expression, hand, and effect sprites are swapped
+              and layered at runtime to communicate every combat state inside the small canvas.
+            </p>
+            <div class="sprite-preview-grid" aria-label="Selected character sprite previews">
+              <figure>
+                <img
+                  src="assets/images/goku-vs-piccolo/goku-idle.png"
+                  alt="Goku idle pixel-art sprite"
+                  loading="lazy"
+                >
+                <figcaption>Goku Idle</figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="assets/images/goku-vs-piccolo/piccolo-angry.png"
+                  alt="Piccolo screaming pixel-art face sprite"
+                  loading="lazy"
+                >
+                <figcaption>Ki Blast</figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="assets/images/goku-vs-piccolo/goku-damage.png"
+                  alt="Goku damage reaction pixel-art sprite"
+                  loading="lazy"
+                >
+                <figcaption>Goku Damage</figcaption>
+              </figure>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!--
+      3D CHARACTER WORK
+      This first draft focuses on two character projects instead of filling the
+      section with unrelated props. Each placeholder names the exact render or
+      animation that will replace it during the media pass.
+    -->
+    <section class="modeling-section page-section reveal-panel" id="modeling-animation" data-nav-section="modeling-animation">
+      <div class="modeling-panel">
+        <div class="modeling-heading">
+          <p class="section-kicker">03 / 3D Character Work</p>
+          <h2>3D Modeling &amp; Animation</h2>
+          <p>
+            
+          </p>
+        </div>
+
+        <div class="modeling-project-list">
+          <article class="modeling-project-card">
+            <!-- Replace these placeholders with dinosaur images or videos without changing the layout. -->
+            <div class="media-carousel modeling-media" data-carousel aria-label="Dinosaur character media">
+              <div class="media-viewport">
+                <button class="media-arrow media-arrow-left" type="button" data-carousel-prev aria-label="Previous dinosaur media">
+                  <span aria-hidden="true">&#8249;</span>
+                </button>
+
+                <div class="media-slide is-current">
+                  <img
+                    src="assets/images/3d-work/dinosaur-final.png"
+                    alt="Low-poly apatosaurus character model in a blue and gold environment"
+                    loading="lazy"
+                  >
+                </div>
+                <div class="media-slide">
+                  <img
+                    class="modeling-wireframe-image"
+                    src="assets/images/3d-work/dinosaur-wireframe.png"
+                    alt="Wireframe view of the low-poly apatosaurus showing its topology and model statistics"
+                    loading="lazy"
+                  >
+                </div>
+                <div class="media-slide">
+                  <video
+                    controls
+                    muted
+                    loop
+                    playsinline
+                    preload="metadata"
+                    aria-label="Looping walk-cycle animation of the low-poly apatosaurus"
+                  >
+                    <source src="assets/videos/3d-work/dinosaur-walk.webm" type="video/webm">
+                    Your browser does not support WebM video playback.
+                  </video>
+                </div>
+
+                <button class="media-arrow media-arrow-right" type="button" data-carousel-next aria-label="Next dinosaur media">
+                  <span aria-hidden="true">&#8250;</span>
+                </button>
+
+                <p class="media-count" data-carousel-count>01 / 03</p>
+              </div>
+            </div>
+
+            <div class="modeling-project-copy">
+              <p class="work-type">Project from GIMM 370</p>
+              <h3>Low Poly Apatosaurus</h3>
+              <p>
+                I modeled and UV unwrapped this dinosaur, built a functional character rig,
+                and created a walk cycle. The project introduced me to carrying one character
+                through the major stages of a complete 3D asset pipeline.
+              </p>
+              <ul class="modeling-skill-list" aria-label="Dinosaur project skills">
+                <li>Maya Autodesk</li>
+                <li>UV Unwrapping</li>
+                <li>Rigging</li>
+                <li>Walk Cycle</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="modeling-project-card is-reversed">
+            <!-- The WIP label keeps the current Symbiosis animation scope clear and intentional. -->
+            <div class="media-carousel modeling-media" data-carousel aria-label="Symbiosis character media">
+              <div class="media-viewport">
+                <button class="media-arrow media-arrow-left" type="button" data-carousel-prev aria-label="Previous Symbiosis character media">
+                  <span aria-hidden="true">&#8249;</span>
+                </button>
+
+                <div class="media-slide is-current">
+                  <img
+                    src="assets/images/3d-work/symbiosis-character-rig.png"
+                    alt="Front view of the low-poly Symbiosis player character with its Maya rig and model statistics visible"
+                    loading="lazy"
+                  >
+                </div>
+                <div class="media-slide">
+                  <video
+                    controls
+                    muted
+                    loop
+                    playsinline
+                    preload="metadata"
+                    aria-label="Looping idle animation of the low-poly Symbiosis player character"
+                  >
+                    <source src="assets/videos/3d-work/symbiosis-idle.webm" type="video/webm">
+                    Your browser does not support WebM video playback.
+                  </video>
+                </div>
+                <div class="media-slide">
+                  <video
+                    controls
+                    muted
+                    loop
+                    playsinline
+                    preload="metadata"
+                    aria-label="Looping run animation of the low-poly Symbiosis player character"
+                  >
+                    <source src="assets/videos/3d-work/symbiosis-run.webm" type="video/webm">
+                    Your browser does not support WebM video playback.
+                  </video>
+                </div>
+
+                <button class="media-arrow media-arrow-right" type="button" data-carousel-next aria-label="Next Symbiosis character media">
+                  <span aria-hidden="true">&#8250;</span>
+                </button>
+
+                <p class="media-count" data-carousel-count>01 / 03</p>
+              </div>
+            </div>
+
+            <div class="modeling-project-copy">
+              <div class="modeling-project-labels">
+                <p class="work-type">Symbiosis Character Development</p>
+                <span>Work in Progress</span>
+              </div>
+              <h3>Player Character</h3>
+              <p>
+                I am developing this character for SYMBIOSIS and currently have the model prepared
+                in a T-pose with idle and run animation tests. The character will continue to evolve
+                as it's design and movement are refined alongside the game.
+              </p>
+              <ul class="modeling-skill-list" aria-label="Symbiosis character skills">
+                <li>Character Modeling</li>
+                <li>Rigging</li>
+                <li>Idle Animation</li>
+                <li>Run Cycle</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!--
+      FUTURE WORK
+      A single honest placeholder keeps the page open for later additions.
+    -->
+    <section class="future-work-section page-section reveal-panel" id="future-work" data-nav-section="future-work">
+      <div class="future-work-panel">
+        <p class="section-kicker">04 / More to Come</p>
+        <h2>Future Work</h2>
+        <p>
+          More work will be added here as I continue updating this page, including additional projects,
+          design explorations, and a broader look at the work I've done.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
