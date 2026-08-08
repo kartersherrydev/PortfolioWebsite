@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self'; frame-src 'self'; connect-src 'none'; media-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'"
+  >
+  <meta name="referrer" content="no-referrer">
+  <title>Play Goku vs. Piccolo | Karter Sherry</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="game-launch-page">
+  <!--
+    SIMPLE GAME LAUNCH
+    The separate page keeps arrow-key input away from the portfolio's scrolling.
+    Relative paths let the same page work locally and after GitHub Pages deployment.
+  -->
+  <header class="game-launch-header">
+    <a class="button secondary-button" href="work.html#goku-vs-piccolo">&#8592; Back to Work</a>
+  </header>
+
+  <main class="game-launch-shell">
+    <!--
+      SANDBOXED GAME FRAME
+      Same-origin access lets the copied artifact load beside a local file as well as on
+      GitHub Pages. Other sandbox permissions remain disabled.
+    -->
+    <section class="game-frame-panel" aria-label="Playable game">
+      <div class="game-frame-wrap">
+        <iframe
+          src="assets/games/goku-vs-piccolo/game.html"
+          title="Playable Goku versus Piccolo student fan game"
+          width="500"
+          height="500"
+          sandbox="allow-scripts allow-same-origin"
+          referrerpolicy="no-referrer"
+        ></iframe>
+      </div>
+
+      <div class="game-launch-controls" aria-label="Keyboard controls">
+        <h1>Controls</h1>
+        <dl>
+          <div>
+            <dt><kbd>Space</kbd></dt>
+            <dd>Start / Restart</dd>
+          </div>
+          <div>
+            <dt><kbd>&larr;</kbd></dt>
+            <dd>Punch Left</dd>
+          </div>
+          <div>
+            <dt><kbd>&rarr;</kbd></dt>
+            <dd>Punch Right</dd>
+          </div>
+          <div>
+            <dt><kbd>&darr;</kbd></dt>
+            <dd>Block / Dodge</dd>
+          </div>
+        </dl>
+        <p>Click the game to start and focus the controls. Space also starts or restarts.</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
